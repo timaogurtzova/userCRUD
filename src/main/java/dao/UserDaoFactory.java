@@ -12,6 +12,7 @@ public class UserDaoFactory {
         UserDAO userDAO = null;
         Properties property = new Properties();
         String file = "../webapps/userCRUD_war/WEB-INF/classes/config.properties";
+
         try (FileInputStream fis = new FileInputStream(new File(file).getAbsolutePath())) {
             property.load(fis);
         } catch (IOException e) {
@@ -28,7 +29,6 @@ public class UserDaoFactory {
                 break;
             }
         }
-
         return userDAO;
     }
 }

@@ -10,17 +10,13 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 import org.hibernate.service.ServiceRegistry;
-
 import java.util.List;
 
 public class UserHibernateDAO implements UserDAO {
 
-    private Configuration configuration;
-
     private SessionFactory sessionFactory;
 
     UserHibernateDAO(Configuration configuration) {
-        this.configuration = configuration;
         sessionFactory = createSessionFactory(configuration);
     }
 
@@ -45,18 +41,6 @@ public class UserHibernateDAO implements UserDAO {
     }
 
     @Override
-    public User getUserById(long id) throws DBException {
-        User user;
-
-        try (Session session = sessionFactory.openSession()) {
-            user = session.get(User.class, id);
-        } catch (HibernateException e) {
-            throw new DBException(e);
-        }
-        return user;
-    }
-
-    @Override
     public User getUserWithNameAndPassword (String name, String password) throws DBException {
         User user;
         try (Session session = sessionFactory.openSession()) {
@@ -71,19 +55,6 @@ public class UserHibernateDAO implements UserDAO {
         }
 
         return user;
-    }
-
-    @Override
-    public long getCountUserThisCity(String city) throws DBException {
-        long result;
-        try(Session session = sessionFactory.openSession()) {
-        Query query = session.createQuery("SELECT COUNT (user) FROM User user WHERE user.city =:parameter")
-                .setParameter("parameter", city);
-        result = (Long)query.uniqueResult();
-        } catch (HibernateException e) {
-            throw new DBException(e);
-        }
-        return result;
     }
 
     @Override

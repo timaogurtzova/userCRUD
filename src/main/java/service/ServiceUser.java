@@ -4,7 +4,6 @@ import dao.UserDAO;
 import dao.UserDaoFactory;
 import exception.DBException;
 import model.User;
-
 import java.util.List;
 
 public class ServiceUser {
@@ -35,16 +34,6 @@ public class ServiceUser {
         return users;
     }
 
-    public User getUserByIdService(long id) {
-        User user = null;
-        try {
-            user = userDAO.getUserById(id);
-        } catch (DBException e) {
-
-        }
-        return user;
-    }
-
     public User getUserWithNameAndPasswordService (String name, String password) {
         User user = null;
         try {
@@ -54,17 +43,6 @@ public class ServiceUser {
 
         }
         return user;
-    }
-
-    public long getCountUserThisCityService(String city) {
-        long count = 0L;
-        try {
-            if (city != null) {
-                count = userDAO.getCountUserThisCity(city);
-            }
-        } catch (DBException e) {
-        }
-        return count;
     }
 
     public void updateUserByIdService(long id, User user) {
