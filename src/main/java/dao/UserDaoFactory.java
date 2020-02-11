@@ -1,9 +1,8 @@
 package dao;
 
 import util.DBHelper;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 public class UserDaoFactory {
@@ -11,10 +10,10 @@ public class UserDaoFactory {
     public UserDAO getUserDAO() {
         UserDAO userDAO = null;
         Properties property = new Properties();
-        String file = "../webapps/userCRUD_war/WEB-INF/classes/config.properties";
+        //String file = new File("../webapps/userCRUD_war/WEB-INF/classes/config.properties").getAbsolutePath();
 
-        try (FileInputStream fis = new FileInputStream(new File(file).getAbsolutePath())) {
-            property.load(fis);
+        try (InputStream is = UserDaoFactory.class.getClassLoader().getResourceAsStream("/config.properties")) {
+            property.load(is);
         } catch (IOException e) {
             System.out.println("Не удалось обнаружить файл");
         }

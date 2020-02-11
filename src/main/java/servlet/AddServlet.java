@@ -19,6 +19,9 @@ public class AddServlet extends HttpServlet {
         String password = req.getParameter("password");
         String city = req.getParameter("city");
         String role = req.getParameter("role");
+        if (role == null){
+            role = "user";
+        }
 
         try {
             int ageInt = Integer.parseInt(age);
@@ -27,6 +30,6 @@ public class AddServlet extends HttpServlet {
         } catch (NumberFormatException e) {
 
         }
-        getServletContext().getRequestDispatcher("/WEB-INF/adminpage.jsp").forward(req, resp);
+       // getServletContext().getRequestDispatcher("/WEB-INF/adminpage.jsp").forward(req, resp);
     }
 }

@@ -16,7 +16,7 @@ public class AuthorizationFilter implements Filter {
         User user = ServiceUser.getInstance().getUserWithNameAndPasswordService(name, password);
 
         if (user == null) {
-            RequestDispatcher rd=request.getRequestDispatcher("index.jsp");
+            RequestDispatcher rd=request.getRequestDispatcher("registration.jsp");
             rd.forward(request, response);
         }
 
@@ -26,7 +26,7 @@ public class AuthorizationFilter implements Filter {
                 break;
             }
             case ("user"):{
-                request.getRequestDispatcher("user.jsp").forward(request, response);
+                request.getRequestDispatcher("/user").forward(request, response);
                break;
             }
         }
