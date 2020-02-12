@@ -2,11 +2,11 @@
 
 <html>
 <head>
-    <title>Welcome Cat Page</title>
+    <title>Welcome cat page</title>
 </head>
 <body>
 <p>Hello, meow! <p>
-<form action="${pageContext.request.contextPath}/authorizationFilter">
+<form action="${pageContext.request.contextPath}/roleFilter" method="post">
     <td>Name <input name="name" type="text" minlength="1" /> </td>
     <td>Password <input name="password" type="password" min=1 /> </td>
     <input type="submit" value="authorization" />

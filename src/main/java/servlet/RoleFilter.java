@@ -6,8 +6,8 @@ import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import java.io.IOException;
 
-@WebFilter("/authorizationFilter")
-public class AuthorizationFilter implements Filter {
+@WebFilter("/roleFilter")
+public class RoleFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
@@ -16,19 +16,20 @@ public class AuthorizationFilter implements Filter {
         User user = ServiceUser.getInstance().getUserWithNameAndPasswordService(name, password);
 
         if (user == null) {
-            RequestDispatcher rd=request.getRequestDispatcher("registration.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("registration.jsp");
             rd.forward(request, response);
+        } else {
+            switch (user.getRole()) {
+                case ("admin"):{
+                    request.getRequestDispatcher("/WEB-INF/adminpage.jsp").forward(request, response);
+                    break;
+                }
+                case ("user"):{
+                    request.getRequestDispatcher("/user").forward(request, response);
+                    break;
+                }
+            }
         }
 
-        switch (user.getRole()){
-            case ("admin"):{
-                request.getRequestDispatcher("/WEB-INF/adminpage.jsp").forward(request, response);
-                break;
-            }
-            case ("user"):{
-                request.getRequestDispatcher("/user").forward(request, response);
-               break;
-            }
-        }
     }
 }
