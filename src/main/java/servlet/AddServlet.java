@@ -31,6 +31,7 @@ public class AddServlet extends HttpServlet {
             int ageInt = Integer.parseInt(age);
             User user = new User(name, ageInt, password, city, role);
             ServiceUser.getInstance().addUserService(user);
+            req.setAttribute("user", user);
         } catch (NumberFormatException e) {
 
         }
