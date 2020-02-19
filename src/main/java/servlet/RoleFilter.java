@@ -19,28 +19,22 @@ public class RoleFilter extends AbstractHttpFilter {
         HttpSession session = request.getSession();
         User userInSession = (User)session.getAttribute("user");
 
-       /* User'a может не быть в сессии. Надо узнать, есть ли он в БД.
-        User может быть в сессии, но тот, что в сессии, может не совпадать с User, под которым
-        хочет войти пользователь. Если не совпадает, то надо узнать, есть ли в БД.
+       /* Проверка, есть ли в сессии User.
+       Если в сессии нет User, узнаем, есть ли он в БД. Нашли - сохранили в сессию этого User'а.
+       Если в сессии есть User, он может не совпадать с тем User, под которым хочет зайти пользователь.
+       Узнаем, есть ли он в БД. Нашли - сохранили в сессию этого User'а.
          */
-
         if (userInSession == null) {
-            User userBD = ServiceUser.getInstance().getUserWithNameAndPasswordService(name, password);
-            if (userBD != null) {
-                session.setAttribute("user", userBD);
-            }
-            sendRedirect(request, response, userBD);
+            User userDB = userInDB (session, name, password);
+            sendRedirect(request, response, userDB);
         } else {
             String nameUserInSession = userInSession.getName();
             String passwordUserInSession = userInSession.getPassword();
             if (nameUserInSession.equals(name) && passwordUserInSession.equals(password)) {
                 sendRedirect(request, response, userInSession);
             } else {
-                User userBD = ServiceUser.getInstance().getUserWithNameAndPasswordService(name, password);
-                if (userBD != null) {
-                    session.setAttribute("user", userBD);
-                }
-                sendRedirect(request, response, userBD);
+                User userDB = userInDB(session, name, password);
+                sendRedirect(request, response, userDB);
                 }
             }
     }
@@ -61,5 +55,13 @@ public class RoleFilter extends AbstractHttpFilter {
                 }
             }
         }
+    }
+
+    private User userInDB (HttpSession session, String name, String password){
+        User userDB = ServiceUser.getInstance().getUserWithNameAndPasswordService(name, password);
+        if (userDB != null) {
+            session.setAttribute("user", userDB);
+        }
+        return userDB;
     }
 }
