@@ -34,6 +34,16 @@ public class ServiceUser {
         return users;
     }
 
+    public User getUserByIdService(long id) {
+        User user = null;
+        try {
+            user = userDAO.getUserById(id);
+        } catch (DBException e) {
+
+        }
+        return user;
+    }
+
     public User getUserWithNameAndPasswordService (String name, String password) {
         User user = null;
         try {

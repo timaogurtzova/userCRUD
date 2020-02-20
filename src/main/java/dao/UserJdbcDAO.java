@@ -39,6 +39,28 @@ public class UserJdbcDAO implements UserDAO {
     }
 
     @Override
+    public User getUserById(long id) throws DBException {
+        String sql = "SELECT name, age, password, city, role FROM users WHERE id = ?";
+        User user = null;
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setLong(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()){
+                String name = resultSet.getString("name");
+                int age = resultSet.getInt("age");
+                String password = resultSet.getString("password");
+                String city = resultSet.getString("city");
+                String role = resultSet.getString("role");
+                user = new User(id, name, age, password, city, role);
+            }
+            resultSet.close();
+        } catch (SQLException e) {
+            throw new DBException(e);
+        }
+        return user;
+    }
+
+    @Override
     public User getUserWithNameAndPassword (String name, String password) throws DBException {
         String sql = "SELECT id, age, city, role FROM users WHERE name = ? AND password = ?";
         User user = null;

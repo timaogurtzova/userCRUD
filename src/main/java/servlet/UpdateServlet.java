@@ -21,16 +21,12 @@ public class UpdateServlet extends HttpServlet {
         String city = req.getParameter("city");
         String role = req.getParameter("role");
 
-        String oldName = req.getParameter("oldname");
-        String oldPass = req.getParameter("oldpassword");
         try {
             long idLong = Long.parseLong(id);
             int ageInt = Integer.parseInt(age);
-            User validateOrNot = ServiceUser.getInstance().getUserWithNameAndPasswordService(oldName, oldPass);
-            if (validateOrNot != null){
-                User user = new User(idLong, name, ageInt, password, city, role);
-                ServiceUser.getInstance().updateUserByIdService(idLong, user );
-            }
+            User user = new User(idLong, name, ageInt, password, city, role);
+            ServiceUser.getInstance().updateUserByIdService(idLong, user );
+
         } catch (NumberFormatException e) {
 
         }

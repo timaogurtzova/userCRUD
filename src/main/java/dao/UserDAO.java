@@ -8,6 +8,8 @@ public interface UserDAO {
 
     List<User> getAllUser() throws DBException;
 
+    User getUserById(long id) throws DBException;
+
     User getUserWithNameAndPassword(String name, String password) throws DBException;
 
     void updateUserById(long id, User newParameterUser) throws DBException;

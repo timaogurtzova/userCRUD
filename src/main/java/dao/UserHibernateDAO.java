@@ -41,6 +41,18 @@ public class UserHibernateDAO implements UserDAO {
     }
 
     @Override
+    public User getUserById(long id) throws DBException {
+        User user;
+
+        try (Session session = sessionFactory.openSession()) {
+            user = session.get(User.class, id);
+        } catch (HibernateException e) {
+            throw new DBException(e);
+        }
+        return user;
+    }
+
+    @Override
     public User getUserWithNameAndPassword (String name, String password) throws DBException {
         User user;
         try (Session session = sessionFactory.openSession()) {
