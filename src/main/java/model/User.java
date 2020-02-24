@@ -25,7 +25,7 @@ public class User {
     @Column(name = "city")
     private String city;
 
-    protected User(){
+    protected User() {
 
     }
 

@@ -10,9 +10,10 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 import org.hibernate.service.ServiceRegistry;
+
 import java.util.List;
 
-public class UserHibernateDAO implements UserDAO {
+class UserHibernateDAO implements UserDAO {
 
     private SessionFactory sessionFactory;
 
@@ -35,7 +36,7 @@ public class UserHibernateDAO implements UserDAO {
             Query<User> query = session.createQuery("SELECT user FROM User user");
             users = query.list();
         } catch (HibernateException e) {
-          throw new DBException(e);
+            throw new DBException(e);
         }
         return users;
     }
@@ -53,7 +54,7 @@ public class UserHibernateDAO implements UserDAO {
     }
 
     @Override
-    public User getUserWithNameAndPassword (String name, String password) throws DBException {
+    public User getUserWithNameAndPassword(String name, String password) throws DBException {
         User user;
         try (Session session = sessionFactory.openSession()) {
             Query query = session.createQuery(

@@ -1,4 +1,4 @@
-package servlet;
+package filter;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -9,7 +9,7 @@ public abstract class AbstractHttpFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        doFilter((HttpServletRequest)servletRequest, (HttpServletResponse)servletResponse, filterChain);
+        doFilter((HttpServletRequest) servletRequest, (HttpServletResponse) servletResponse, filterChain);
     }
 
     public abstract void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException;

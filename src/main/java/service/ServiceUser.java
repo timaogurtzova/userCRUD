@@ -4,6 +4,7 @@ import dao.UserDAO;
 import dao.UserDaoFactory;
 import exception.DBException;
 import model.User;
+
 import java.util.List;
 
 public class ServiceUser {
@@ -18,7 +19,7 @@ public class ServiceUser {
 
     public static ServiceUser getInstance() {
         if (serviceUser == null) {
-            UserDAO createUserDAO =  new UserDaoFactory().getUserDAO();
+            UserDAO createUserDAO = new UserDaoFactory().getUserDAO();
             serviceUser = new ServiceUser(createUserDAO);
         }
         return serviceUser;
@@ -44,11 +45,11 @@ public class ServiceUser {
         return user;
     }
 
-    public User getUserWithNameAndPasswordService (String name, String password) {
+    public User getUserWithNameAndPasswordService(String name, String password) {
         User user = null;
         try {
-            if (name !=null && password !=null)
-            user = userDAO.getUserWithNameAndPassword(name, password);
+            if (name != null && password != null)
+                user = userDAO.getUserWithNameAndPassword(name, password);
         } catch (DBException e) {
 
         }
@@ -57,7 +58,7 @@ public class ServiceUser {
 
     public void updateUserByIdService(long id, User user) {
         try {
-            if (user != null){
+            if (user != null) {
                 userDAO.updateUserById(id, user);
             }
         } catch (DBException e) {

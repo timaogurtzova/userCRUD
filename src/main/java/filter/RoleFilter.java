@@ -1,7 +1,8 @@
-package servlet;
+package filter;
 
 import model.User;
 import service.ServiceUser;
+
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +18,7 @@ public class RoleFilter extends AbstractHttpFilter {
         String name = request.getParameter("name");
         String password = request.getParameter("password");
         HttpSession session = request.getSession();
-        User userInSession = (User)session.getAttribute("user");
+        User userInSession = (User) session.getAttribute("user");
 
        /* Проверка, есть ли в сессии User.
        Если в сессии нет User, узнаем, есть ли он в БД. Нашли - сохранили в сессию этого User'а.
@@ -25,7 +26,7 @@ public class RoleFilter extends AbstractHttpFilter {
        Узнаем, есть ли он в БД. Нашли - сохранили в сессию этого User'а.
          */
         if (userInSession == null) {
-            User userDB = userInDB (session, name, password);
+            User userDB = userInDB(session, name, password);
             sendRedirect(request, response, userDB);
         } else {
             String nameUserInSession = userInSession.getName();
@@ -35,11 +36,11 @@ public class RoleFilter extends AbstractHttpFilter {
             } else {
                 User userDB = userInDB(session, name, password);
                 sendRedirect(request, response, userDB);
-                }
             }
+        }
     }
 
-    private void sendRedirect (HttpServletRequest request, HttpServletResponse response, User user) throws ServletException, IOException {
+    private void sendRedirect(HttpServletRequest request, HttpServletResponse response, User user) throws ServletException, IOException {
         if (user == null) {
             RequestDispatcher rd = request.getRequestDispatcher("registration.jsp");
             rd.forward(request, response);
@@ -57,7 +58,7 @@ public class RoleFilter extends AbstractHttpFilter {
         }
     }
 
-    private User userInDB (HttpSession session, String name, String password){
+    private User userInDB(HttpSession session, String name, String password) {
         User userDB = ServiceUser.getInstance().getUserWithNameAndPasswordService(name, password);
         if (userDB != null) {
             session.setAttribute("user", userDB);

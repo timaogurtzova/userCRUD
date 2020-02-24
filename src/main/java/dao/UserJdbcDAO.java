@@ -2,15 +2,16 @@ package dao;
 
 import exception.DBException;
 import model.User;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserJdbcDAO implements UserDAO {
+class UserJdbcDAO implements UserDAO {
 
     private Connection connection;
 
-    UserJdbcDAO (Connection connection) {
+    UserJdbcDAO(Connection connection) {
         this.connection = connection;
     }
 
@@ -45,7 +46,7 @@ public class UserJdbcDAO implements UserDAO {
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 String name = resultSet.getString("name");
                 int age = resultSet.getInt("age");
                 String password = resultSet.getString("password");
@@ -61,14 +62,14 @@ public class UserJdbcDAO implements UserDAO {
     }
 
     @Override
-    public User getUserWithNameAndPassword (String name, String password) throws DBException {
+    public User getUserWithNameAndPassword(String name, String password) throws DBException {
         String sql = "SELECT id, age, city, role FROM users WHERE name = ? AND password = ?";
         User user = null;
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, name);
             statement.setString(2, password);
             ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()){
+            if (resultSet.next()) {
                 long id = resultSet.getLong("id");
                 int age = resultSet.getInt("age");
                 String city = resultSet.getString("city");
@@ -115,7 +116,7 @@ public class UserJdbcDAO implements UserDAO {
     }
 
     @Override
-    public void deleteUserById (long id) throws DBException {
+    public void deleteUserById(long id) throws DBException {
         String sql = "DELETE FROM users WHERE id = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setLong(1, id);

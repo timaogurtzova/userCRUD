@@ -2,6 +2,7 @@ package dao;
 
 import exception.DBException;
 import model.User;
+
 import java.util.List;
 
 public interface UserDAO {

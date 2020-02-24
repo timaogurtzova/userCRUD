@@ -2,6 +2,7 @@ package servlet;
 
 import model.User;
 import service.ServiceUser;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,7 +26,7 @@ public class UpdateServlet extends HttpServlet {
             long idLong = Long.parseLong(id);
             int ageInt = Integer.parseInt(age);
             User user = new User(idLong, name, ageInt, password, city, role);
-            ServiceUser.getInstance().updateUserByIdService(idLong, user );
+            ServiceUser.getInstance().updateUserByIdService(idLong, user);
 
         } catch (NumberFormatException e) {
 

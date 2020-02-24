@@ -2,6 +2,7 @@ package servlet;
 
 import com.google.gson.Gson;
 import model.User;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,7 +22,7 @@ public class UserServlet extends HttpServlet {
             String json = gson.toJson(user);
             resp.getWriter().write(json);
             resp.setStatus(200);
-        }else {
+        } else {
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("/index.jsp");
             requestDispatcher.forward(req, resp);
         }
